@@ -1,22 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function AddForm({ createPizza }) {
+export default function EditForm({ oneProduct, getOneProduct, updateProduct }) {
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const [info, setInfo] = useState("");
   const [price, setPrice] = useState("");
 
+  let navigate = useNavigate();
+
+  const { id } = useParams();
+  useEffect(() => {
+    getOneProduct(id);
+  }, []);
+
+  useEffect(() => {
+    if (oneProduct) {
+      setUrl(oneProduct.url);
+      setTitle(oneProduct.title);
+      setInfo(oneProduct.info);
+      setPrice(oneProduct.price);
+    }
+  }, [oneProduct]);
+
   const handleClick = (e) => {
     e.preventDefault();
-    let onePizza = {
+    let editedProduct = {
       url,
       title,
       info,
       price: +price,
     };
     if (url.trim() && title.trim() && info.trim() && price.trim()) {
-      createPizza(onePizza);
+      updateProduct(id, editedProduct);
       alert("Продукт добавлен");
+      navigate(`/details/${id}`);
       setUrl("");
       setTitle("");
       setInfo("");
@@ -29,7 +47,7 @@ export default function AddForm({ createPizza }) {
   return (
     <div className="form">
       <form>
-        <h1>Форма добавления</h1>
+        <h1>Форма редактирования</h1>
         <input
           onChange={(e) => setUrl(e.target.value)}
           value={url}
@@ -54,7 +72,7 @@ export default function AddForm({ createPizza }) {
           type="number"
           placeholder="Цена"
         />
-        <button onClick={(e) => handleClick(e)}>Добавить пиццу</button>
+        <button onClick={(e) => handleClick(e)}>Редактировать продукт</button>
       </form>
     </div>
   );

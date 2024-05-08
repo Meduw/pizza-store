@@ -17,7 +17,7 @@ export default function HomePages({ pizzas, getPizzas }) {
 
   return (
     <div className="container">
-      <Box className="banner-parent">
+      {/* <Box className="banner-parent">
         <Box className="banner-inner bn-1">
           <img src={banner1} alt="banner1" />
           <img src={banner2} alt="banner2" />
@@ -27,7 +27,7 @@ export default function HomePages({ pizzas, getPizzas }) {
           <img src={banner4} alt="banner4" />
           <img src={banner5} alt="banner5" />
         </Box>
-      </Box>
+      </Box> */}
       <Box className="hp-btns">
         <button
           onClick={() => setSelectCategory("все")}
